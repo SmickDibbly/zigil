@@ -1,0 +1,9 @@
+* The "zglDraw_" prefix.
+- It's bad and inconsistent with my three-letter prefix style. Change all
+  "zglDraw_FUNCTION to "zgl_DrawFUNCTION" or some such.
+
+* Does "mPixel" need to exist?
+- Do we really need explicit separation of the integer and fixed-point screen
+  units? They are both just int32_t. Why not just have the fundamental unit of
+  zgl_Pixel and keep track of precision in another way (say, by passing
+  precision to functions as an argument)?
