@@ -139,16 +139,17 @@ directories :
 	$(HIDE)$(MKDIR) $(TARGETDIRS)
 
 # Used to copy the library to the diblib directory.
-A_DEST     = $(realpath $(PROJDIR)/../epm/zigil)
-H_DEST     = $(realpath $(PROJDIR)/../epm/zigil)
+A_DEST     = $(PROJDIR)/../epm/zigil
+H_DEST     = $(PROJDIR)/../epm/zigil
 #A_DEST     = $(DIBLIB_DIR)/a
 #H_DEST     = $(DIBLIB_DIR)/h
 
-install : 
-	$(HIDE)printf '$(BOLD)$(ORANGE)Copying library$(SGR0)\n'
-	$(HIDE)$(CP) $(TARGET_LIB) $(A_DEST)
+install :
+	$(HIDE)$(MKDIR) $(A_DEST)
 	$(HIDE)$(MKDIR) $(H_DEST)
 	$(HIDE)$(MKDIR) $(H_DEST)/diblib_local
+	$(HIDE)printf '$(BOLD)$(ORANGE)Copying library$(SGR0)\n'
+	$(HIDE)$(CP) $(TARGET_LIB) $(A_DEST)
 	$(HIDE)printf '$(BOLD)$(ORANGE)Copying headers$(SGR0)\n'
 	$(HIDE)$(CP) $(PUBLIC_HEADERS) $(H_DEST)
 	$(HIDE)$(CP) $(DIBLIB_LOCAL_PUBLIC_HEADERS) $(H_DEST)/diblib_local
