@@ -7,6 +7,14 @@
 #include "src/zigil_dir.h"
 #include "src/X11/zglx.h"
 
+void zgl_MakeDir(char const *relpath) {
+    struct stat st = {0};
+    
+    if (stat(relpath, &st) == -1) {
+        mkdir(relpath, S_IRWXU | S_IRWXG | S_IRWXO);
+    }
+}
+
 void zgl_PrintDir(char const *dirpath) {
     DIR *p_dir = opendir(dirpath);
 
@@ -22,7 +30,7 @@ void zgl_PrintDir(char const *dirpath) {
         if (p_entry == NULL) {
             break;
         }
-        
+
         strcpy(entryname, p_entry->d_name);
         if (strcmp(".", entryname) == 0) continue;
         if (strcmp("..", entryname) == 0) continue;
@@ -58,9 +66,12 @@ void zgl_PrintDir(char const *dirpath) {
 
 char buffer[8192] = {'\0'};
 
-void zgl_GetDirListing(zgl_DirListing *dl, char const *dirpath) {
+zgl_Result zgl_GetDirListing(zgl_DirListing *dl, char const *dirpath) {
     DIR *p_dir = opendir(dirpath);
-
+    if ( ! p_dir) {
+        return ZR_ERROR;
+    }
+    
     char *p_buf = buffer;
 
     struct dirent *p_entry;
@@ -106,4 +117,18 @@ void zgl_GetDirListing(zgl_DirListing *dl, char const *dirpath) {
     
     
     dl->num_entries = num_entries;
+
+    return ZR_SUCCESS;
+}
+
+
+zgl_Result zgl_LocateFile(char const *filename, int num_dirs, char const *dirs[], char *out_fullpath) {
+    zgl_DirListing dl;
+    for (int i = 0; i < num_dirs; i++) {
+        if (ZR_ERROR == zgl_GetDirListing(&dl, dirs[i])) continue;
+
+        // TODO: See if file is in this directory.
+    }
+    
+    return ZR_SUCCESS;
 }

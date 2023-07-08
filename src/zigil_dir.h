@@ -24,7 +24,9 @@ typedef struct zgl_DirListing {
     zgl_DirEntry entries[MAX_DIRLISTING_ENTRIES];
 } zgl_DirListing;
 
-extern void zgl_GetDirListing(zgl_DirListing *dl, char const *dirpath);
+extern zgl_Result zgl_GetDirListing(zgl_DirListing *dl, char const *dirpath);
 extern void zgl_PrintDir(char const *dirpath);
+extern void zgl_MakeDir(char const *relpath);
+
 
 #endif
